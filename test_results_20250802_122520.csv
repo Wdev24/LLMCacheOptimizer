@@ -1,0 +1,96 @@
+prompt,expected,actual_source,confidence,is_correct,error_type,category,difficulty,response_time,processing_time,similarity_score,reranker_score,intent_score
+What is machine learning?,cache,cache,1.0,True,,exact_match,1,2.4929378032684326,0.436,0,0,0
+Define artificial intelligence,cache,cache,1.0,True,,exact_match,1,2.4899401664733887,0.435,0,0,0
+How does neural network work?,cache,cache,1.0,True,,exact_match,1,2.4899370670318604,0.436,0,0,0
+What is LLM?,cache,cache,1.0,True,,exact_match,1,2.2678184509277344,0.212,0,0,0
+What is ML?,cache,cache,0.6406383888116106,True,,semantic_match,2,2.277811288833618,0.215,0,0,0
+Explain machine learning,cache,llm,0.0,False,false_negative,semantic_match,2,9.02716612815857,6.977,0,0,0
+Tell me about artificial intelligence,cache,llm,0.0,False,false_negative,semantic_match,2,5.833760023117065,3.774,0,0,0
+How do neural networks function?,cache,cache,1.0,True,,semantic_match,2,2.2108306884765625,0.177,0,0,0
+Define LLM,cache,llm,0.0,False,false_negative,semantic_match,2,4.716635704040527,2.639,0,0,0
+What are large language models?,cache,llm,0.0,False,false_negative,semantic_match,2,6.572213172912598,4.497,0,0,0
+Call Ramesh,llm,llm,0.0,True,,false_positive_test,5,4.009791135787964,1.97,0,0,0
+Call Ramesh Gupta,llm,llm,0.0,True,,false_positive_test,5,5.443502187728882,3.367,0,0,0
+Call Ramesh Sharma,llm,llm,0.0,True,,false_positive_test,5,3.9062211513519287,1.83,0,0,0
+Call Ramesh Patel,llm,llm,0.0,True,,false_positive_test,5,4.025062322616577,1.948,0,0,0
+Call Kumar,llm,llm,0.0,True,,false_positive_test,5,4.7696757316589355,2.698,0,0,0
+Call Singh,llm,llm,0.0,True,,false_positive_test,5,3.5394785404205322,1.468,0,0,0
+Set alarm for 10:49,llm,llm,0.0,True,,false_positive_test,5,5.347522020339966,3.283,0,0,0
+Set alarm for 10:51,llm,llm,0.0,True,,false_positive_test,5,5.256739139556885,3.177,0,0,0
+Set alarm for 10:52,llm,llm,0.0,True,,false_positive_test,5,3.6714494228363037,1.608,0,0,0
+Set alarm for 10:53,llm,llm,0.0,True,,false_positive_test,5,4.690394639968872,2.633,0,0,0
+Set alarm for 10:54,llm,llm,0.0,True,,false_positive_test,5,5.632735967636108,3.567,0,0,0
+Set alarm for 10:56,llm,llm,0.0,True,,false_positive_test,5,3.992974281311035,1.924,0,0,0
+Set alarm for 11:50,llm,llm,0.0,True,,false_positive_test,5,4.3250205516815186,2.254,0,0,0
+Set alarm for 9:50,llm,llm,0.0,True,,false_positive_test,5,5.308442831039429,3.246,0,0,0
+Machine learning stocks to buy,llm,llm,0.0,True,,intent_mismatch,4,6.120771408081055,4.059,0,0,0
+Machine learning job salary,llm,llm,0.0,True,,intent_mismatch,4,5.555011034011841,3.464,0,0,0
+AI companies list,llm,llm,0.0,True,,intent_mismatch,4,5.1168434619903564,3.039,0,0,0
+Neural network hardware requirements,llm,llm,0.0,True,,intent_mismatch,4,7.429659843444824,5.34,0,0,0
+LLM API pricing,llm,llm,0.0,True,,intent_mismatch,4,6.244596004486084,4.182,0,0,0
+What is machine learning in finance?,llm,llm,0.0,True,,context_switch,4,7.675225734710693,5.62,0,0,0
+AI in healthcare applications,llm,llm,0.0,True,,context_switch,4,9.807498931884766,7.728,0,0,0
+Neural networks for image recognition,llm,llm,0.0,True,,context_switch,4,10.576793193817139,8.497,0,0,0
+LLM for code generation,llm,llm,0.0,True,,context_switch,4,6.956168174743652,4.874,0,0,0
+What is NOT machine learning?,llm,cache,1.0,False,false_positive,negation,4,2.709420680999756,0.654,0,0,0
+Why AI is not intelligent?,llm,llm,0.0,True,,negation,4,8.020025730133057,5.953,0,0,0
+Neural networks disadvantages,llm,llm,0.0,True,,negation,4,8.682484149932861,6.632,0,0,0
+Is machine learning useful?,llm,llm,0.0,True,,question_type,3,5.863524436950684,3.811,0,0,0
+Can AI replace humans?,llm,llm,0.0,True,,question_type,3,6.844322204589844,4.77,0,0,0
+Should I learn neural networks?,llm,llm,0.0,True,,question_type,3,8.788513660430908,6.722,0,0,0
+Will LLMs get better?,llm,llm,0.0,True,,question_type,3,4.236063480377197,2.159,0,0,0
+What is machien learning?,cache,cache,0.7496132082864642,True,,typo_test,3,2.8028669357299805,0.732,0,0,0
+Defien artificial intelligence,cache,llm,0.0,False,false_negative,typo_test,3,4.973876237869263,2.899,0,0,0
+How does nueral network work?,cache,cache,0.8401896229386331,True,,typo_test,3,2.6535120010375977,0.567,0,0,0
+Machine learning definition please,cache,llm,0.0,False,false_negative,style_variation,2,5.373915195465088,3.32,0,0,0
+Can you explain what AI is?,cache,llm,0.0,False,false_negative,style_variation,2,6.957374095916748,4.869,0,0,0
+I need to understand neural networks,cache,llm,0.0,False,false_negative,style_variation,2,11.071192264556885,9.034,0,0,0
+Help me understand LLMs,cache,llm,0.0,False,false_negative,style_variation,2,7.836981773376465,5.787,0,0,0
+What is machine learning and how does it work?,llm,cache,1.0,False,false_positive,compound,4,2.5856289863586426,0.53,0,0,0
+Define AI and give examples,llm,cache,1.0,False,false_positive,compound,4,2.6089577674865723,0.554,0,0,0
+Neural networks vs deep learning differences,llm,llm,0.0,True,,compound,4,5.119543790817261,3.051,0,0,0
+Machine learning vs artificial intelligence,llm,llm,0.0,True,,comparison,4,5.892576694488525,3.829,0,0,0
+Deep learning vs neural networks,llm,llm,0.0,True,,comparison,4,5.610352516174316,3.544,0,0,0
+LLM vs transformer difference,llm,llm,0.0,True,,comparison,4,5.587646484375,3.513,0,0,0
+Machine learning algorithms list,llm,cache,1.0,False,false_positive,specific_details,4,2.59313702583313,0.534,0,0,0
+AI programming languages,llm,llm,0.0,True,,specific_details,4,6.884392023086548,4.833,0,0,0
+Neural network layers explanation,llm,llm,0.0,True,,specific_details,4,7.51805853843689,5.434,0,0,0
+LLM training process,llm,llm,0.0,True,,specific_details,4,5.527378797531128,3.474,0,0,0
+How to cook pasta?,llm,llm,0.0,True,,different_topic,1,5.106380939483643,3.04,0,0,0
+Weather forecast today,llm,llm,0.0,True,,different_topic,1,4.9409706592559814,2.884,0,0,0
+Best restaurants nearby,llm,llm,0.0,True,,different_topic,1,7.639363527297974,5.592,0,0,0
+Stock market trends,llm,llm,0.0,True,,different_topic,1,5.650756359100342,3.584,0,0,0
+How to lose weight?,llm,cache,0.6174421726192668,False,false_positive,different_topic,1,2.4580366611480713,0.383,0,0,0
+,error,error,0.0,True,,edge_case,5,2.0583598613739014,0.0,0,0,0
+   ,error,error,0.0,True,,edge_case,5,2.0714144706726074,0.0,0,0,0
+a,llm,llm,0.0,True,,edge_case,5,5.569944381713867,3.51,0,0,0
+????????????????????????????????????????????????????????????????????????????????????????????????????,llm,llm,0.0,True,,edge_case,5,4.365675687789917,2.288,0,0,0
+machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning machine learning ,llm,llm,0.0,True,,edge_case,5,8.06969165802002,5.986,0,0,0
+learning,llm,llm,0.0,True,,ambiguous,4,7.151841163635254,5.099,0,0,0
+intelligence,llm,llm,0.0,True,,ambiguous,4,6.2735595703125,4.194,0,0,0
+network,llm,llm,0.0,True,,ambiguous,4,7.706088066101074,5.659,0,0,0
+model,llm,llm,0.0,True,,ambiguous,4,4.661303520202637,2.576,0,0,0
+¿Qué es machine learning?,llm,llm,0.0,True,,multilingual,3,8.687090873718262,6.621,0,0,0
+Was ist künstliche Intelligenz?,llm,llm,0.0,True,,multilingual,3,6.462257146835327,4.4,0,0,0
+Qu'est-ce que l'IA?,llm,llm,0.0,True,,multilingual,3,8.319567203521729,6.232,0,0,0
+Thanks for explaining ML,llm,llm,0.0,True,,conversational,3,3.442066192626953,1.377,0,0,0
+That's helpful about AI,llm,llm,0.0,True,,conversational,3,3.9161112308502197,1.852,0,0,0
+Can you tell me more?,llm,llm,0.0,True,,conversational,3,4.1043689250946045,2.024,0,0,0
+Teach me machine learning,llm,llm,0.0,True,,instruction,3,11.47345757484436,9.405,0,0,0
+Show me AI examples,llm,llm,0.0,True,,instruction,3,8.65000581741333,6.565,0,0,0
+List neural network types,llm,llm,0.0,True,,instruction,3,8.604812383651733,6.541,0,0,0
+Latest machine learning trends,llm,llm,0.0,True,,temporal,4,11.509655237197876,9.44,0,0,0
+Future of AI,llm,llm,0.0,True,,temporal,4,9.91023874282837,7.861,0,0,0
+Recent neural network breakthroughs,llm,llm,0.0,True,,temporal,4,10.704818964004517,8.65,0,0,0
+Call John Kumar,llm,llm,0.0,True,,false_positive_test,5,4.245107173919678,2.175,0,0,0
+Call Ramesh Martin,llm,llm,0.0,True,,false_positive_test,5,4.204394340515137,2.153,0,0,0
+Call Kumar Singh,llm,llm,0.0,True,,false_positive_test,5,5.201716899871826,3.128,0,0,0
+Set alarm for 10:59,llm,llm,0.0,True,,false_positive_test,5,5.421311140060425,3.355,0,0,0
+Set timer for 10:50,llm,cache,1.0,False,false_positive,false_positive_test,5,2.3377580642700195,0.266,0,0,0
+Set reminder for 10:55,llm,cache,1.0,False,false_positive,false_positive_test,5,2.299116849899292,0.221,0,0,0
+Machine learning applications,llm,llm,0.0,True,,semantic_boundary,4,6.497689247131348,4.448,0,0,0
+AI ethics concerns,llm,llm,0.0,True,,semantic_boundary,4,7.013977766036987,4.945,0,0,0
+Neural network optimization,llm,llm,0.0,True,,semantic_boundary,4,4.528547048568726,2.464,0,0,0
+LLM limitations,llm,llm,0.0,True,,semantic_boundary,4,6.64259672164917,4.574,0,0,0
+What is machine learning? Please explain in detail with examples and applications.,llm,llm,0.0,True,,stress_test,4,8.690254211425781,6.612,0,0,0
+AI definition comprehensive guide,llm,llm,0.0,True,,stress_test,4,8.555304050445557,6.499,0,0,0

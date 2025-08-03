@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Hybrid Semantic Cache System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .query-section {
+            margin-bottom: 40px;
+        }
+
+        .query-form {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .query-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .query-input:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        }
+
+        .submit-btn, .clear-btn, .stats-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(155, 89, 182, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .stats-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .stats-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .response-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .source-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .source-cache {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .source-enhanced_cache {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .source-enhanced_llm {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .source-llm {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .source-error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .confidence-bar {
+            width: 120px;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #27ae60 100%);
+            transition: width 0.8s ease;
+        }
+
+        .response-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .metadata-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .metadata-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .metadata-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .stats-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e1e8ed;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .example-queries {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f1f3f4;
+            border-radius: 12px;
+        }
+
+        .example-queries h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .example-query {
+            display: inline-block;
+            background: white;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            border: 1px solid #e1e8ed;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .example-query:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #fdeded;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Enhanced pipeline indicator */
+        .pipeline-indicator {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .query-form {
+                flex-direction: column;
+            }
+
+            .metadata-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Hybrid Semantic Cache System</h1>
+            <p>Enhanced multi-stage pipeline with BGE embeddings, FAISS retrieval, and cross-encoder reranking</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Pipeline Indicator -->
+            <div class="pipeline-indicator">
+                🚀 Enhanced Multi-Stage Pipeline Active
+            </div>
+
+            <!-- Query Section -->
+            <div class="query-section">
+                <form class="query-form" id="queryForm">
+                    <input 
+                        type="text" 
+                        class="query-input" 
+                        id="queryInput" 
+                        placeholder="Ask me anything... (Enhanced pipeline handles complex queries better!)"
+                        required
+                    >
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span>🚀</span> Enhanced Query
+                    </button>
+                    <button type="button" class="clear-btn" id="clearBtn">
+                        <span>🗑️</span> Clear Cache
+                    </button>
+                    <button type="button" class="stats-btn" id="statsBtn">
+                        <span>📊</span> Stats
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    Processing your query through enhanced pipeline...
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+            </div>
+
+            <!-- Response Section -->
+            <div class="response-section" id="responseSection">
+                <div class="response-header">
+                    <div class="source-badge" id="sourceBadge">ENHANCED CACHE</div>
+                    <div class="confidence-meter">
+                        <span>Confidence:</span>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <span id="confidenceText">0%</span>
+                    </div>
+                </div>
+
+                <div class="response-text" id="responseText"></div>
+
+                <div class="metadata-grid" id="metadataGrid">
+                    <!-- Metadata items will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section" id="statsSection">
+                <h2 style="margin-bottom: 20px; color: #2c3e50;">📊 Enhanced Cache Statistics</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Example Queries -->
+            <div class="example-queries">
+                <h3>💡 Try these enhanced example queries:</h3>
+                <div class="example-query" data-query="What is machine learning and how does it work?">What is machine learning and how does it work?</div>
+                <div class="example-query" data-query="Define artificial intelligence and give examples">Define artificial intelligence and give examples</div>
+                <div class="example-query" data-query="How does neural network work?">How does neural network work?</div>
+                <div class="example-query" data-query="Call Ramesh Kumar">Call Ramesh Kumar</div>
+                <div class="example-query" data-query="Call Ramesh Singh">Call Ramesh Singh</div>
+                <div class="example-query" data-query="Set alarm for 10:50">Set alarm for 10:50</div>
+                <div class="example-query" data-query="Set alarm for 10:55">Set alarm for 10:55</div>
+                <div class="example-query" data-query="What is LLM and how is it trained?">What is LLM and how is it trained?</div>
+                <div class="example-query" data-query="Explain the difference between AI and ML">Explain the difference between AI and ML</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const queryForm = document.getElementById('queryForm');
+        const queryInput = document.getElementById('queryInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const statsBtn = document.getElementById('statsBtn');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const responseSection = document.getElementById('responseSection');
+        const sourceBadge = document.getElementById('sourceBadge');
+        const confidenceFill = document.getElementById('confidenceFill');
+        const confidenceText = document.getElementById('confidenceText');
+        const responseText = document.getElementById('responseText');
+        const metadataGrid = document.getElementById('metadataGrid');
+        const statsSection = document.getElementById('statsSection');
+        const statsGrid = document.getElementById('statsGrid');
+
+        // Event listeners
+        queryForm.addEventListener('submit', handleEnhancedQuery);
+        clearBtn.addEventListener('click', clearCache);
+        statsBtn.addEventListener('click', toggleStats);
+
+        // Example query handlers
+        document.querySelectorAll('.example-query').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                queryInput.value = e.target.dataset.query;
+                handleEnhancedQuery(new Event('submit'));
+            });
+        });
+
+        async function handleEnhancedQuery(e) {
+            e.preventDefault();
+            
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            showLoading(true);
+            hideError();
+            hideResponse();
+
+            try {
+                const response = await fetch('/api/query/enhanced', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    displayEnhancedResponse(data);
+                } else {
+                    showError(data.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function clearCache() {
+            if (!confirm('Are you sure you want to clear the cache?')) return;
+
+            try {
+                const response = await fetch('/api/cache/clear', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    alert('Cache cleared successfully!');
+                    hideResponse();
+                    hideStats();
+                } else {
+                    showError(data.error || 'Failed to clear cache');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+
+        async function toggleStats() {
+            if (statsSection.style.display === 'block') {
+                hideStats();
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/cache/stats');
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    displayStats(data.stats);
+                } else {
+                    showError(data.error || 'Failed to get stats');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+
+        function displayEnhancedResponse(data) {
+            // Helper function to safely format numbers
+            const safeFormat = (value, decimals = 3) => {
+                if (value === null || value === undefined || isNaN(value)) {
+                    return '0.000';
+                }
+                return Number(value).toFixed(decimals);
+            };
+
+            // Update source badge
+            sourceBadge.textContent = (data.source || 'unknown').toUpperCase();
+            sourceBadge.className = `source-badge source-${data.source || 'error'}`;
+
+            // Update confidence meter
+            const confidence = Math.round((data.confidence || 0) * 100);
+            confidenceFill.style.width = `${confidence}%`;
+            confidenceText.textContent = `${confidence}%`;
+
+            // Update response text
+            responseText.textContent = data.response || 'No response received';
+
+            // Update metadata
+            metadataGrid.innerHTML = '';
+            
+            const metadata = [
+                { label: 'Total Processing Time', value: `${safeFormat(data.total_time || data.processing_time, 3)}s` },
+                { label: 'API Processing Time', value: `${safeFormat(data.api_processing_time, 3)}s` },
+                { label: 'Similarity Score', value: safeFormat(data.similarity_score) },
+                { label: 'Reranker Score', value: safeFormat(data.reranker_score) },
+                { label: 'Intent Score', value: safeFormat(data.intent_score) }
+            ];
+
+            // Add enhanced metadata
+            if (data.stage_timings) {
+                const stageCount = Object.keys(data.stage_timings).length;
+                metadata.push({ 
+                    label: 'Pipeline Stages', 
+                    value: `${stageCount} stages` 
+                });
+
+                // Add individual stage timings
+                Object.entries(data.stage_timings).forEach(([stage, time]) => {
+                    metadata.push({
+                        label: `${stage.charAt(0).toUpperCase() + stage.slice(1)} Stage`,
+                        value: `${(time * 1000).toFixed(1)}ms`
+                    });
+                });
+            }
+
+            // Add query decomposition info
+            if (data.query_decomposition) {
+                const decomp = data.query_decomposition;
+                metadata.push({
+                    label: 'Query Type',
+                    value: decomp.query_type || 'unknown'
+                });
+                metadata.push({
+                    label: 'Complexity Score',
+                    value: `${((decomp.complexity_score || 0) * 100).toFixed(1)}%`
+                });
+                if (decomp.atomic_intents && decomp.atomic_intents.length > 1) {
+                    metadata.push({
+                        label: 'Atomic Intents',
+                        value: decomp.atomic_intents.length
+                    });
+                }
+            }
+
+            if (data.cached_query) {
+                metadata.push({ label: 'Cached Query', value: data.cached_query });
+            }
+
+            metadata.forEach(item => {
+                const metadataItem = document.createElement('div');
+                metadataItem.className = 'metadata-item';
+                metadataItem.innerHTML = `
+                    <div class="metadata-label">${item.label}</div>
+                    <div class="metadata-value">${item.value}</div>
+                `;
+                metadataGrid.appendChild(metadataItem);
+            });
+
+            showResponse();
+        }
+
+        function displayStats(stats) {
+            statsGrid.innerHTML = '';
+
+            // Helper function to safely format numbers
+            const safeFormat = (value, decimals = 3) => {
+                if (value === null || value === undefined || isNaN(value)) {
+                    return '0.000';
+                }
+                return Number(value).toFixed(decimals);
+            };
+
+            const statItems = [
+                { label: 'Total Queries', value: stats.total_queries || 0 },
+                { label: 'Cache Hits', value: stats.cache_hits || 0 },
+                { label: 'LLM Calls', value: stats.llm_calls || 0 },
+                { label: 'Cache Hit Rate', value: `${stats.cache_hit_rate || 0}%` },
+                { label: 'Entity Overrides', value: stats.entity_overrides || 0 },
+                { label: 'False Positive Blocks', value: stats.false_positive_blocks || 0 },
+                { label: 'Avg Confidence', value: safeFormat(stats.average_confidence) },
+                { label: 'Avg Response Time', value: `${safeFormat(stats.average_response_time)}s` },
+                { label: 'Cached Vectors', value: (stats.index_stats && stats.index_stats.total_vectors) || 0 },
+                { label: 'Index Status', value: (stats.index_stats && stats.index_stats.status) || 'unknown' }
+            ];
+
+            statItems.forEach(item => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                statCard.innerHTML = `
+                    <div class="stat-number">${item.value}</div>
+                    <div class="stat-label">${item.label}</div>
+                `;
+                statsGrid.appendChild(statCard);
+            });
+
+            showStats();
+        }
+
+        function showLoading(show) {
+            loading.style.display = show ? 'block' : 'none';
+            submitBtn.disabled = show;
+        }
+
+        function showResponse() {
+            responseSection.style.display = 'block';
+        }
+
+        function hideResponse() {
+            responseSection.style.display = 'none';
+        }
+
+        function showStats() {
+            statsSection.style.display = 'block';
+            statsBtn.textContent = '📊 Hide Stats';
+        }
+
+        function hideStats() {
+            statsSection.style.display = 'none';
+            statsBtn.innerHTML = '<span>📊</span> Stats';
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+
+        // Auto-focus on input
+        queryInput.focus();
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "framework_metadata": {
+    "version": "Enterprise-1.0",
+    "total_tests": 50,
+    "cache_miss_tests": 42,
+    "cache_hit_tests": 8,
+    "test_timestamp": "2025-08-03T09:40:03.274193"
+  },
+  "precision_metrics": {
+    "regular_avg_precision": 0.864,
+    "enhanced_avg_precision": 0.888,
+    "precision_improvement": 0.024
+  },
+  "false_positive_detection": {
+    "regular_detection_rate": 95.2,
+    "enhanced_detection_rate": 100.0,
+    "detection_improvement": 4.8
+  },
+  "winner_distribution": {
+    "enhanced_wins": 2,
+    "regular_wins": 2,
+    "ties": 46,
+    "enhanced_win_rate": 4.0
+  },
+  "semantic_boundary_analysis": {
+    "temporal_precision": {
+      "total_tests": 7,
+      "regular_avg_precision": 1.0,
+      "enhanced_avg_precision": 1.0,
+      "enhanced_wins": 0,
+      "avg_difficulty": 8.142857142857142
+    },
+    "numerical_specificity": {
+      "total_tests": 8,
+      "regular_avg_precision": 1.0,
+      "enhanced_avg_precision": 1.0,
+      "enhanced_wins": 0,
+      "avg_difficulty": 7.875
+    },
+    "modal_logic": {
+      "total_tests": 5,
+      "regular_avg_precision": 0.72,
+      "enhanced_avg_precision": 0.72,
+      "enhanced_wins": 0,
+      "avg_difficulty": 6.2
+    },
+    "causal_relationships": {
+      "total_tests": 5,
+      "regular_avg_precision": 1.0,
+      "enhanced_avg_precision": 1.0,
+      "enhanced_wins": 0,
+      "avg_difficulty": 8.4
+    },
+    "scope_boundaries": {
+      "total_tests": 6,
+      "regular_avg_precision": 0.8833333333333333,
+      "enhanced_avg_precision": 0.8833333333333333,
+      "enhanced_wins": 0,
+      "avg_difficulty": 7.333333333333333
+    },
+    "semantic_roles": {
+      "total_tests": 9,
+      "regular_avg_precision": 0.7,
+      "enhanced_avg_precision": 0.6111111111111112,
+      "enhanced_wins": 0,
+      "avg_difficulty": 6
+    },
+    "presupposition": {
+      "total_tests": 5,
+      "regular_avg_precision": 0.8,
+      "enhanced_avg_precision": 1.0,
+      "enhanced_wins": 1,
+      "avg_difficulty": 7.4
+    },
+    "pragmatic_implicature": {
+      "total_tests": 5,
+      "regular_avg_precision": 0.8,
+      "enhanced_avg_precision": 1.0,
+      "enhanced_wins": 1,
+      "avg_difficulty": 7.6
+    }
+  },
+  "risk_level_analysis": {
+    "critical": {
+      "total_tests": 14,
+      "regular_avg_precision": 1.0,
+      "enhanced_avg_precision": 1.0,
+      "precision_improvement": 0.0
+    },
+    "high": {
+      "total_tests": 15,
+      "regular_avg_precision": 1.0,
+      "enhanced_avg_precision": 1.0,
+      "precision_improvement": 0.0
+    },
+    "medium": {
+      "total_tests": 13,
+      "regular_avg_precision": 0.8461538461538461,
+      "enhanced_avg_precision": 1.0,
+      "precision_improvement": 0.15384615384615385
+    },
+    "low": {
+      "total_tests": 8,
+      "regular_avg_precision": 0.39999999999999997,
+      "enhanced_avg_precision": 0.3,
+      "precision_improvement": -0.09999999999999999
+    }
+  }
+}
